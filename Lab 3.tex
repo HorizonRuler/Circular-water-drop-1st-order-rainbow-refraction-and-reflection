@@ -1,0 +1,58 @@
+\documentclass[12pt]{scrartcl}
+\setlength{\marginparwidth}{2cm}
+\usepackage[sexy, american, noasy]{evan}
+\usepackage{tikz}
+\usepackage{pgfmath}
+\usetikzlibrary{intersections, scopes, angles}
+\newcommand{\pgfextractangle}[3]{%
+    \pgfmathanglebetweenpoints{\pgfpointanchor{#2}{center}}
+                              {\pgfpointanchor{#3}{center}}
+    \global\let#1\pgfmathresult  
+}
+\begin{document}
+\title{1st Order Rainbow}
+\subtitle{Exit angle as a function of entering height, index of refraction, and drop diameter for a circular water drop}
+\maketitle
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}
+        \def \index {1.33};
+        \def \y {6.08cm}
+        \def \r {7.05cm}
+        \fill (0, 0) circle (2pt) node (O) {} node [anchor = south] {O};
+        \draw [name path = circle, blue] (O) circle (\r);
+        \path [name path = line1] (-\r, \y) coordinate(I) -- (0, \y);
+        \draw [red, name intersections = {of = circle and line1}] (I) -- (intersection-1);
+        \filldraw (intersection-1) circle (2pt) node (A) {} node [anchor = north] {A};
+        \pgfextractangle{\anglei}{A}{O}
+        \def \angler {asin(sin(360 - \anglei) / \index))};
+        \path [name path = line2] (A) -- ++({-360 + \anglei + \angler} : 2 * \r);
+        \draw [red, name intersections = {of = circle and line2}] (A) -- (intersection-1);
+        \filldraw (intersection-1) circle (2pt) node (B) {} node[anchor = west] {B};
+        \path [name path = line3] (B) -- ++({180 + (-360 + \anglei + \angler) + 2 * \angler} : 2 * \r);
+        \draw [red, name intersections = {of = circle and line3}] (B) -- (intersection-1);
+        \filldraw (intersection-1) circle (2pt) node (C) {} node [anchor = west] {C};
+        \pgfextractangle{\angleo}{C}{O}
+        \draw [red] (C) -- ++({180 + \angleo - (360 - \anglei)} : 1.5cm) coordinate(C'');
+        {[dashed]
+            \draw (O) -- node [above right] {r} (A) -- ([turn]0:1.5cm) coordinate(A');
+            \draw (O) -- node [above] {r} (B) -- ([turn]0:1.5cm) coordinate(B');
+            \draw (O) -- node [right] {r} (C) -- ([turn]0:1.5cm) coordinate(C');
+            \draw (C) -- ++(1.5cm, 0);
+            \draw (C) -- ++(-1.5cm, 0) coordinate(C''');
+            \draw (-\r, 0) coordinate(O') -- (\r, 0);
+            \draw[<->] (O') -- node [above right] {y} (I);
+        }
+        \filldraw (O') circle (2pt) node (O') {} node [above right] {O'};
+        \path pic["$\alpha$",angle radius = 1cm,angle eccentricity=1.5, draw] {angle=O--A--B};
+        \path pic["$\alpha$",angle radius = 1cm,angle eccentricity=1.5, draw] {angle=A--B--O};
+        \path pic["$\alpha$",angle radius = 1cm,angle eccentricity=1.5, draw] {angle=O--B--C};
+        \path pic["$\alpha$",angle radius = 1cm,angle eccentricity=1.5, draw] {angle=B--C--O};
+        \path pic["$\beta$",angle eccentricity=1.5, draw] {angle=A'--A--I};
+        \path pic["$\beta$",angle eccentricity=1.5, draw] {angle=C''--C--C'};
+        \path pic["$\beta$",angle eccentricity=1.5, draw] {angle=A--O--O'};
+        \path pic["$4\alpha$",angle radius = 1cm,angle eccentricity=1.5, draw] {angle=A--O--C};
+        \path pic["$\theta$",angle radius = 1cm,angle eccentricity=1.5, draw] {angle=C'''--C--C''};
+    \end{tikzpicture}
+\end{figure}
+\end{document}
