@@ -1,9 +1,8 @@
 \documentclass[12pt]{scrartcl}
 \setlength{\marginparwidth}{2cm}
-\usepackage[sexy, american, noasy]{evan}
 \usepackage{tikz}
 \usepackage{pgfmath}
-\usetikzlibrary{intersections, scopes, angles}
+\usetikzlibrary{intersections, scopes, angles, quotes}
 \newcommand{\pgfextractangle}[3]{%
     \pgfmathanglebetweenpoints{\pgfpointanchor{#2}{center}}
                               {\pgfpointanchor{#3}{center}}
@@ -17,6 +16,7 @@
 \def \r {7.05cm}
 
 \title{1st Order Rainbow}
+\author{Mingyuan Wang}
 \subtitle{Exit angle as a function of entering height, index of refraction, and drop diameter for a circular water drop}
 \maketitle
 \begin{figure}[h]
