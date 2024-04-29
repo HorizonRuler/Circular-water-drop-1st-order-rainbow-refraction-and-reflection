@@ -10,15 +10,18 @@
     \global\let#1\pgfmathresult  
 }
 \begin{document}
+
+% Tunable parameters!
+\def \index {1.33}
+\def \y {6.08cm}
+\def \r {7.05cm}
+
 \title{1st Order Rainbow}
 \subtitle{Exit angle as a function of entering height, index of refraction, and drop diameter for a circular water drop}
 \maketitle
 \begin{figure}[h]
     \centering
     \begin{tikzpicture}
-        \def \index {1.33};
-        \def \y {6.08cm}
-        \def \r {7.05cm}
         \fill (0, 0) circle (2pt) node (O) {} node [anchor = south] {O};
         \draw [name path = circle, blue] (O) circle (\r);
         \path [name path = line1] (-\r, \y) coordinate(I) -- (0, \y);
